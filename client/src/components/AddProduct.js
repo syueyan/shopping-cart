@@ -1,31 +1,36 @@
-const AddProduct = ({products}) => {
-  
+const AddProduct = ({ showAddForm, setAddForm }) => {
+  const toggleAddForm = () => {
+    setAddForm(!showAddForm)
+  }
+
+  const formClass = showAddForm ? "add-form visible" : "add-form"
+
   return (
-    <div class="add-form visible">
-      <p><a class="button add-product-button">Add A Product</a></p>
+    <div className={formClass}>
+      <p><a className="button add-product-button" onClick={toggleAddForm}>Add A Product</a></p>
       <h3>Add Product</h3>
       <form>
-        <div class="input-group">
+        <div className="input-group">
           <label for="product-name">Product Name</label>
           <input type="text" id="product-name" value="" />
         </div>
 
-        <div class="input-group">
+        <div className="input-group">
           <label for="product-price">Price</label>
           <input type="text" id="product-price" value="" />
         </div>
 
-        <div class="input-group">
+        <div className="input-group">
           <label for="product-quantity">Quantity</label>
           <input type="text" id="product-quantity" value="" />
         </div>
 
-        <div class="actions form-actions">
-          <a class="button">Add</a>
-          <a class="button">Cancel</a>
+        <div className="actions form-actions">
+          <a className="button">Add</a>
+          <a className="button" onClick={toggleAddForm}>Cancel</a>
         </div>
       </form>
-    </div>    
+    </div>
   )
 }
 

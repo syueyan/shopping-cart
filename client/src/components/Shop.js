@@ -7,10 +7,10 @@ const Shop = ({products}) => {
     return (
       <header>
         <h1>The Shop!</h1>
-        <div class="cart">
+        <div className="cart">
           <h2>Your Cart</h2>
           <Items products={products} />
-          <a class={products.length === 0 ? "button checkout disabled" : "button checkout"}>Checkout</a>
+          <a href="#" className={products.length === 0 ? "button checkout disabled" : "button checkout"}>Checkout</a>
         </div>
       </header>
     );

@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios"
 import Shop from "./Shop";
 import Products from "./Products";
 import data from "../lib/data";
-
-/*
-Shop over view component (Shop)
-  -item over view component (Item)
-    -total (Total)
-
-Products over view component (Products)
-  -item description component (Product)
-    -add/edit component ??
-
-  -add product component (AddProduct) ???
-*/
+import AddProduct from "./AddProduct";
 
 const App = () => {
   const [products, setProducts] = useState([]);
+  const [showAddForm, setAddForm] = useState(false)
+  // const [cart, setCart] = useState([]);
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await axios.get("/api/products")
+      console.log(response)
+    }
+    fetchProducts();
     setProducts(data);
+    // setCart(products)
   }, []);
 
   return (
-    <div>
+    <div id="app">
       <Shop products={products} />
-      <Products products={products} />
+      <main>
+        <Products products={products} />
+        <AddProduct showAddForm={showAddForm} setAddForm={setAddForm} />
+      </main>
     </div>
   );
 };

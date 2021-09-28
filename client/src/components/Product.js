@@ -1,21 +1,24 @@
-const Product = ({products}) => {
+import EditProduct from "./EditProduct";
+import { useState } from "react";
+
+const Product = ({ product }) => {
+  const [showEditForm, setEditForm] = useState(false)
+  const { id, title, quantity, price } = product
   return (
-    products.map(({id, title, quantity, price}) => {
-      return (
-        <div key={id} class="product">
-          <div class="product-details">
-            <h3>{title}</h3>
-            <p class="price">{price}</p>
-            <p class="quantity">{`${quantity} left in stock`}</p>
-            <div class="actions product-actions">
-              <a class="button add-to-cart">Add to Cart</a>
-              <a class="button edit">Edit</a>
-            </div>
-            <a class="delete-button"><span>X</span></a>
-          </div>
-        </div>
-      )
-    })
+    <div key={id} class="product">
+      <div class="product-details">
+        <h3>{title}</h3>
+        <p class="price">{price}</p>
+        <p class="quantity">{`${quantity} left in stock`}</p>
+        <EditProduct id={id}
+          title={title}
+          quantity={quantity}
+          price={price}
+          showEditForm={showEditForm}
+          setEditForm={setEditForm} />
+      </div>
+      <a class="delete-button"><span>X</span></a>
+    </div>
   )
 }
 

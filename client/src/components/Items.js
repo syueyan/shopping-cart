@@ -11,7 +11,7 @@ const Items = ({products}) => {
   }
 
   return (
-    <table class="cart-items">
+    <table className="cart-items">
       <tr>
         <th>Item</th>
         <th>Quantity</th>
