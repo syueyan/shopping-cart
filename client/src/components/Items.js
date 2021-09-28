@@ -12,22 +12,25 @@ const Items = ({products}) => {
 
   return (
     <table className="cart-items">
-      <tr>
-        <th>Item</th>
-        <th>Quantity</th>
-        <th>Price</th>
-      </tr>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
 
-      {products.map(({id, title, quantity, price}) => {
-        return (
-          <tr key={id}>
-            <td>{title}</td>
-            <td>{quantity}</td>
-            <td>{price}</td>
-          </tr>
-        )
-      })}
-      
+      <tbody>
+        {products.map(({id, title, quantity, price}) => {
+          return (
+            <tr key={title + quantity}>
+              <td>{title}</td>
+              <td>{quantity}</td>
+              <td>{price}</td>
+            </tr>
+          )
+        })}
+      </tbody> 
       <Total products={products} />
     </table>
   )

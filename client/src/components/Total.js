@@ -2,9 +2,11 @@ const Total = ({products}) => {
   const total = products.reduce((accum, {price}) => accum + price, 0)
 
   return (
-    <tr>
-      <td colspan="3" class="total">Total: ${total}</td>
-    </tr>
+    <tbody>
+      <tr>
+        <td colSpan="3" className="total">Total: ${total}</td>
+      </tr>
+    </tbody>
   )
 }
 

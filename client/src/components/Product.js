@@ -5,19 +5,20 @@ const Product = ({ product }) => {
   const [showEditForm, setEditForm] = useState(false)
   const { id, title, quantity, price } = product
   return (
-    <div key={id} class="product">
-      <div class="product-details">
+    <div key={id} className="product">
+      <div className="product-details">
         <h3>{title}</h3>
-        <p class="price">{price}</p>
-        <p class="quantity">{`${quantity} left in stock`}</p>
-        <EditProduct id={id}
-          title={title}
-          quantity={quantity}
-          price={price}
-          showEditForm={showEditForm}
-          setEditForm={setEditForm} />
+        <p className="price">{price}</p>
+        <p className="quantity">{`${quantity} left in stock`}</p>
+        <EditProduct  key={id} 
+                      id={id}
+                      title={title}
+                      quantity={quantity}
+                      price={price}
+                      showEditForm={showEditForm}
+                      setEditForm={setEditForm} />
       </div>
-      <a class="delete-button"><span>X</span></a>
+      <a className="delete-button"><span>X</span></a>
     </div>
   )
 }
