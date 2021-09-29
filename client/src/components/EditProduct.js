@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
-const EditProduct = ({ id, title, quantity, price, showEditForm, setEditForm, onEdit, onAddToCart }) => {
-  const [priceField, setPriceField] = useState(price)
-  const [titleField, setTitleField] = useState(title)
-  const [quantityField, setQuantityField] = useState(quantity)
+const EditProduct = ({ product, showEditForm, setEditForm, onEdit, onAddToCart }) => {
+  const { _id, title, quantity, price } = product
+  const [priceField, setPriceField] = useState(product.price)
+  const [titleField, setTitleField] = useState(product.title)
+  const [quantityField, setQuantityField] = useState(product.quantity)
 
   const toggleEditForm = () => {
     setEditForm(!showEditForm);
@@ -11,7 +12,7 @@ const EditProduct = ({ id, title, quantity, price, showEditForm, setEditForm, on
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onEdit(id, {
+    onEdit(_id, {
       title: titleField,
       price: priceField,
       quantity: quantityField
@@ -20,7 +21,7 @@ const EditProduct = ({ id, title, quantity, price, showEditForm, setEditForm, on
 
   const handleAddToCart = () => {
     if (quantity > 0) onAddToCart({
-      productId: id,
+      productId: _id,
       title,
       price,
       quantity 

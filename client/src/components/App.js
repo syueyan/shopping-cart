@@ -34,9 +34,16 @@ const App = () => {
   const handleProductUpdate = async (id, updatedProduct, callback) => {
     try {
       const path = `/api/products/${id}`
-      await axios.put(path, { ...updatedProduct })
-      const response = await axios.get("/api/products")
-      setProducts(response.data)
+      const response = await axios.put(path, { ...updatedProduct })
+      const returnedProduct = response.data
+      console.log(returnedProduct)
+      setProducts(products.map(product => {
+        if (product._id === returnedProduct._id) {
+          return { ...returnedProduct };
+        } else {
+          return { ...product };
+        }
+      }))
       if (callback) callback();
     } catch (e) {
       console.error(e)
@@ -46,8 +53,11 @@ const App = () => {
   const handleDeleteProduct = async (id, callback) => {
     try {
       await axios.delete(`/api/products/${id}`)
-      const response = await axios.get(`/api/products`)
-      setProducts(response.data)
+      setProducts(products.filter(product => {
+        if (product._id !== id) {
+          return true
+        }
+      }))
       if (callback) callback();
     } catch (e) {
       console.error(e)
@@ -65,11 +75,16 @@ const App = () => {
       await axios.post('/api/cart', { ...newCartItem })
       let response = await axios.get(`/api/cart`)
       setCart(response.data)
-
       const path = `/api/products/${productId}`
-      await axios.put(path, { price, title, quantity: quantity - 1 })
-      response = await axios.get(`/api/products`)
-      setProducts(response.data)
+      const res = await axios.put(path, { price, title, quantity: quantity - 1 })
+      const updatedProduct = res.data
+      setProducts(products.map(product => {
+        if (product._id === updatedProduct._id) {
+          return { ...updatedProduct };
+        } else {
+          return { ...product };
+        }
+      }))
     } catch (e) {
       console.log(e)
     }
@@ -78,8 +93,7 @@ const App = () => {
   const handleCheckout = async () => {
     try {
       await axios.post('/api/cart/checkout')
-      const response = await axios.get('/api/cart')
-      setCart(response.data)
+      setCart([])
     } catch (e) {
       console.error(e)
     }

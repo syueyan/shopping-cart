@@ -11,7 +11,12 @@ const Product = ({ product, onEdit, onDelete, onAddToCart }) => {
         <h3>{title}</h3>
         <p className="price">{`$${price}`}</p>
         <p className="quantity">{`${quantity} left in stock`}</p>
-        <EditProduct key={_id}
+        <EditProduct product={product} 
+                     showEditForm={showEditForm}
+                     setEditForm={setEditForm}
+                     onEdit={onEdit}
+                     onAddToCart={onAddToCart}/>
+        {/* <EditProduct key={_id}
           id={_id}
           title={title}
           quantity={quantity}
@@ -19,7 +24,7 @@ const Product = ({ product, onEdit, onDelete, onAddToCart }) => {
           showEditForm={showEditForm}
           setEditForm={setEditForm}
           onEdit={onEdit} 
-          onAddToCart={onAddToCart}/>
+          onAddToCart={onAddToCart}/> */}
       </div>
       <a className="delete-button" onClick={() => onDelete(_id)}>
         <span>X</span>
