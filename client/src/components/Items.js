@@ -1,6 +1,6 @@
 import Total from "./Total";
 
-const Items = ({products}) => {
+const Items = ({ products }) => {
   if (products.length === 0) {
     return (
       <div>
@@ -21,16 +21,16 @@ const Items = ({products}) => {
       </thead>
 
       <tbody>
-        {products.map(({id, title, quantity, price}) => {
+        {products.map(({ productId, title, quantity, price }) => {
           return (
-            <tr key={title + quantity}>
+            <tr key={productId + title}>
               <td>{title}</td>
               <td>{quantity}</td>
               <td>{price}</td>
             </tr>
           )
         })}
-      </tbody> 
+      </tbody>
       <Total products={products} />
     </table>
   )

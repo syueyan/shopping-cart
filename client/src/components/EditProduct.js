@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const EditProduct = ({ id, title, quantity, price, showEditForm, setEditForm }) => {
+const EditProduct = ({ id, title, quantity, price, showEditForm, setEditForm, onEdit, onAddToCart }) => {
   const [priceField, setPriceField] = useState(price)
   const [titleField, setTitleField] = useState(title)
   const [quantityField, setQuantityField] = useState(quantity)
@@ -9,6 +9,27 @@ const EditProduct = ({ id, title, quantity, price, showEditForm, setEditForm }) 
     setEditForm(!showEditForm);
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onEdit(id, {
+      title: titleField,
+      price: priceField,
+      quantity: quantityField
+    }, toggleEditForm)
+  }
+
+  const handleAddToCart = () => {
+    if (quantity > 0) onAddToCart({
+      productId: id,
+      title,
+      price,
+      quantity 
+    })
+  }
+
+  const addToCartClass = quantity <= 0 ? 
+    'button add-to-cart disabled': 'button add-to-cart'
+
   if (showEditForm) {
     return (
       <div className="edit-form">
@@ -16,30 +37,30 @@ const EditProduct = ({ id, title, quantity, price, showEditForm, setEditForm }) 
         <form>
           <div className="input-group">
             <label htmlFor="product-name">Product Name</label>
-            <input  type="text" 
-                    id="product-name" 
-                    value={titleField}  
-                    onChange={(e) => setTitleField(e.target.value)} />
+            <input type="text"
+              id="product-name"
+              value={titleField}
+              onChange={(e) => setTitleField(e.target.value)} />
           </div>
 
           <div className="input-group">
             <label htmlFor="product-price">Price</label>
-            <input  type="text" 
-                    id="product-price" 
-                    value={priceField} 
-                    onChange={(e) => setPriceField(e.target.value)}/>
+            <input type="text"
+              id="product-price"
+              value={priceField}
+              onChange={(e) => setPriceField(e.target.value)} />
           </div>
 
           <div className="input-group">
             <label htmlFor="product-quantity">Quantity</label>
-            <input  type="text" 
-                    id="product-quantity" 
-                    value={quantityField} 
-                    onChange={(e) => setQuantityField(e.target.value)}/>
+            <input type="text"
+              id="product-quantity"
+              value={quantityField}
+              onChange={(e) => setQuantityField(e.target.value)} />
           </div>
 
           <div className="actions form-actions">
-            <a className="button">Update</a>
+            <a className="button" onClick={handleSubmit}>Update</a>
             <a className="button" onClick={toggleEditForm}>Cancel</a>
           </div>
         </form>
@@ -48,7 +69,7 @@ const EditProduct = ({ id, title, quantity, price, showEditForm, setEditForm }) 
   } else {
     return (
       <div className="actions product-actions">
-        <a className="button add-to-cart">Add to Cart</a>
+        <a className={addToCartClass} onClick={handleAddToCart}>Add to Cart</a>
         <a className="button edit" onClick={toggleEditForm}>Edit</a>
       </div>
     )
