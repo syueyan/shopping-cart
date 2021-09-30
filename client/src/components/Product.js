@@ -16,15 +16,6 @@ const Product = ({ product, onEdit, onDelete, onAddToCart }) => {
                      setEditForm={setEditForm}
                      onEdit={onEdit}
                      onAddToCart={onAddToCart}/>
-        {/* <EditProduct key={_id}
-          id={_id}
-          title={title}
-          quantity={quantity}
-          price={price}
-          showEditForm={showEditForm}
-          setEditForm={setEditForm}
-          onEdit={onEdit} 
-          onAddToCart={onAddToCart}/> */}
       </div>
       <a className="delete-button" onClick={() => onDelete(_id)}>
         <span>X</span>

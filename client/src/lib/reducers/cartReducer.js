@@ -4,13 +4,19 @@ const cartReducer = (state = [], action) => {
       const cart = [...state]
       const newItems = action.payload
       newItems.map(newItem => {
-        const found = cart.find(oldItem => oldItem.productId === newItem.productId)
-        if (found) {
-          found.quantity += 1
+        console.log(cart.length)
+        if (cart.length === 0) return cart.push(newItem)
+
+        const foundIdx = cart.findIndex(oldItem => {
+          return oldItem.productId === newItem.productId
+        })
+        if (foundIdx >= 0) {
+          cart[foundIdx].quantity += 1
         } else {
-          cart.push(newItems)
+          cart.push(newItem)
         }
       })
+      console.log(cart)
       return cart
     }
     default: {

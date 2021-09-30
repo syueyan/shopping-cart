@@ -1,5 +1,5 @@
-const Total = ({ products }) => {
-  const total = products.reduce((accum, { price }) => accum + price, 0)
+const Total = ({ cart }) => {
+  const total = cart.reduce((accum, { price, quantity }) => accum + (price * quantity), 0)
 
   return (
     <tbody>

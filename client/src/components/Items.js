@@ -1,10 +1,7 @@
 import Total from "./Total";
 
-// cart is passed in
-// cart = [{id, title, price, quantity, productId}]
-
-const Items = ({ products }) => {
-  if (products.length === 0) {
+const Items = ({ cart }) => {
+  if (cart.length === 0) {
     return (
       <div>
         Your cart is empty
@@ -24,7 +21,7 @@ const Items = ({ products }) => {
       </thead>
 
       <tbody>
-        {products.map(({ productId, title, quantity, price }) => {
+        {cart.map(({ productId, title, quantity, price }) => {
           return (
             <tr key={productId + title}>
               <td>{title}</td>
@@ -34,7 +31,7 @@ const Items = ({ products }) => {
           )
         })}
       </tbody>
-      <Total products={products} />
+      <Total cart={cart} />
     </table>
   )
 }

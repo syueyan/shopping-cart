@@ -14,7 +14,7 @@ const Shop = ({ cart, onCheckout }) => {
       <h1>The Shop!</h1>
       <div className="cart">
         <h2>Your Cart</h2>
-        <Items products={cart} />
+        <Items cart={cart} />
         <a className={btnClass} onClick={handleCheckout}>Checkout</a>
       </div>
     </header>
