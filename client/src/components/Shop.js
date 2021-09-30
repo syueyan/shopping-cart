@@ -1,7 +1,6 @@
 import Items from "./Items";
 
 const Shop = ({ cart, onCheckout }) => {
-  console.log("cart: ", cart)
   const btnClass = cart.length === 0 ?
     "button checkout disabled" :
     "button checkout"

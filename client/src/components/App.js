@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from 'react-dom'
 import axios from "axios"
 import Shop from "./Shop";
 import Products from "./Products";
 import AddProduct from "./AddProduct";
+import { useDispatch, useSelector } from "react-redux";
+
+const addToCartAction = (newItems) => {
+  return { type: "ADD_TO_CART", payload: newItems };
+}
 
 const App = () => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([])
+  // const [cart, setCart] = useState([])
   const [showAddForm, setAddForm] = useState(false)
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
     const fetchProducts = async () => {
       let response = await axios.get("/api/products")
       setProducts(response.data);
       response = await axios.get("/api/cart")
-      setCart(response.data)
+      dispatch(addToCartAction(response.data))
     }
     fetchProducts();
   }, []);
@@ -72,9 +81,8 @@ const App = () => {
     }
 
     try {
-      await axios.post('/api/cart', { ...newCartItem })
-      let response = await axios.get(`/api/cart`)
-      setCart(response.data)
+      const response = await axios.post('/api/cart', { ...newCartItem })
+      dispatch(addToCartAction([response.data]))
       const path = `/api/products/${productId}`
       const res = await axios.put(path, { price, title, quantity: quantity - 1 })
       const updatedProduct = res.data
@@ -93,7 +101,7 @@ const App = () => {
   const handleCheckout = async () => {
     try {
       await axios.post('/api/cart/checkout')
-      setCart([])
+      dispatch(addToCartAction([]))
     } catch (e) {
       console.error(e)
     }
@@ -115,5 +123,7 @@ const App = () => {
     </div>
   );
 };
+
+
 
 export default App;

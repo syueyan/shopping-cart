@@ -1,5 +1,8 @@
 import Total from "./Total";
 
+// cart is passed in
+// cart = [{id, title, price, quantity, productId}]
+
 const Items = ({ products }) => {
   if (products.length === 0) {
     return (
