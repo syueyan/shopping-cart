@@ -3,7 +3,7 @@ const cartReducer = (state = [], action) => {
     case 'ADD_TO_CART': {
       const cart = [...state]
       const newItems = action.payload
-      newItems.map(newItem => {
+      newItems.forEach(newItem => {
         console.log(cart.length)
         if (cart.length === 0) return cart.push(newItem)
 

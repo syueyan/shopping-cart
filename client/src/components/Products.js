@@ -1,7 +1,8 @@
-import React, { useState } from "react";
 import Product from "./Product";
+import { useSelector } from "react-redux"
 
-const Products = ({ products, onEdit, onDelete, onAddToCart }) => {
+const Products = ({ onAddToCart }) => {
+  const products = useSelector((state) => state.products)
 
   return (
     <div className="product-listing">
@@ -10,8 +11,6 @@ const Products = ({ products, onEdit, onDelete, onAddToCart }) => {
         return (
           <Product key={product.title}
             product={product}
-            onEdit={onEdit}
-            onDelete={onDelete} 
             onAddToCart={onAddToCart}/>
         )
       })}

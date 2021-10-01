@@ -1,17 +1,30 @@
 import { useState } from 'react'
+import actions from '../lib/actions'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
 
-const AddProduct = ({ showAddForm, setAddForm, onSubmit }) => {
+const AddProduct = ({ showAddForm, setAddForm }) => {
   const [price, setPrice] = useState("")
   const [title, setTitle] = useState("")
   const [quantity, setQuantity] = useState("")
+
+  const dispatch = useDispatch();
 
   const toggleAddForm = () => {
     setAddForm(!showAddForm)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit({ title, price, quantity }, resetInputs)
+    try {
+      const newProduct = { title, price, quantity}
+      const response = await axios.post("/api/products", { ...newProduct })
+      const returnedProduct = response.data;
+      dispatch(actions.addNewProducts([returnedProduct]))
+      resetInputs();
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   const resetInputs = () => {

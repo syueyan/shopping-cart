@@ -1,22 +1,36 @@
 import { useState } from 'react'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import actions from '../lib/actions'
 
-const EditProduct = ({ product, showEditForm, setEditForm, onEdit, onAddToCart }) => {
+const EditProduct = ({ product, showEditForm, setEditForm, onAddToCart }) => {
   const { _id, title, quantity, price } = product
   const [priceField, setPriceField] = useState(product.price)
   const [titleField, setTitleField] = useState(product.title)
   const [quantityField, setQuantityField] = useState(product.quantity)
 
+  const dispatch = useDispatch();
+
   const toggleEditForm = () => {
     setEditForm(!showEditForm);
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onEdit(_id, {
-      title: titleField,
-      price: priceField,
-      quantity: quantityField
-    }, toggleEditForm)
+    try {
+      const updatedProduct = {
+        title: titleField,
+        price: priceField,
+        quantity: quantityField
+      }
+      const path = `/api/products/${_id}`
+      const response = await axios.put(path, { ...updatedProduct })
+      const returnedProduct = response.data
+      dispatch(actions.updateProduct(returnedProduct))
+      toggleEditForm()
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   const handleAddToCart = () => {
