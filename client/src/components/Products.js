@@ -1,7 +1,7 @@
 import Product from "./Product";
 import { useSelector } from "react-redux"
 
-const Products = ({ onAddToCart }) => {
+const Products = () => {
   const products = useSelector((state) => state.products)
 
   return (
@@ -10,8 +10,7 @@ const Products = ({ onAddToCart }) => {
       {products.map((product) => {
         return (
           <Product key={product.title}
-            product={product}
-            onAddToCart={onAddToCart}/>
+            product={product} />
         )
       })}
     </div>

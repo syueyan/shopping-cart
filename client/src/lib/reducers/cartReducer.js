@@ -16,8 +16,10 @@ const cartReducer = (state = [], action) => {
           cart.push(newItem)
         }
       })
-      console.log(cart)
       return cart
+    }
+    case "CHECKOUT": {
+      return []
     }
     default: {
       return state;

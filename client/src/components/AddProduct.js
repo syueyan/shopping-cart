@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import actions from '../lib/actions'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
 const AddProduct = ({ showAddForm, setAddForm }) => {
@@ -16,15 +15,9 @@ const AddProduct = ({ showAddForm, setAddForm }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const newProduct = { title, price, quantity}
-      const response = await axios.post("/api/products", { ...newProduct })
-      const returnedProduct = response.data;
-      dispatch(actions.addNewProducts([returnedProduct]))
-      resetInputs();
-    } catch (e) {
-      console.error(e)
-    }
+    const newProduct = { title, price, quantity}
+    dispatch(actions.addNewProducts(newProduct))
+    resetInputs();
   }
 
   const resetInputs = () => {

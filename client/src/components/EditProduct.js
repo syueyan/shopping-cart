@@ -1,13 +1,12 @@
 import { useState } from 'react'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import actions from '../lib/actions'
 
-const EditProduct = ({ product, showEditForm, setEditForm, onAddToCart }) => {
+const EditProduct = ({ product, showEditForm, setEditForm }) => {
   const { _id, title, quantity, price } = product
-  const [priceField, setPriceField] = useState(product.price)
-  const [titleField, setTitleField] = useState(product.title)
-  const [quantityField, setQuantityField] = useState(product.quantity)
+  const [priceField, setPriceField] = useState(price)
+  const [titleField, setTitleField] = useState(title)
+  const [quantityField, setQuantityField] = useState(quantity)
 
   const dispatch = useDispatch();
 
@@ -17,29 +16,21 @@ const EditProduct = ({ product, showEditForm, setEditForm, onAddToCart }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const updatedProduct = {
-        title: titleField,
-        price: priceField,
-        quantity: quantityField
-      }
-      const path = `/api/products/${_id}`
-      const response = await axios.put(path, { ...updatedProduct })
-      const returnedProduct = response.data
-      dispatch(actions.updateProduct(returnedProduct))
-      toggleEditForm()
-    } catch (e) {
-      console.error(e)
+    const updatedProduct = {
+      _id,
+      title: titleField,
+      price: priceField,
+      quantity: quantityField
     }
+    dispatch(actions.updateProduct(updatedProduct))
+    toggleEditForm()
   }
 
-  const handleAddToCart = () => {
-    if (quantity > 0) onAddToCart({
-      productId: _id,
-      title,
-      price,
-      quantity 
-    })
+  const handleAddToCart = async () => {
+    if (quantity > 0) {
+      dispatch(actions.addToCart({...product, productId: _id }))
+      dispatch(actions.updateProduct({...product, quantity: quantity - 1}))
+    }
   }
 
   const addToCartClass = quantity <= 0 ? 

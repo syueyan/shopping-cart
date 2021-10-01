@@ -4,19 +4,14 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import actions from '../lib/actions'
 
-const Product = ({ product, onAddToCart }) => {
+const Product = ({ product }) => {
   const [showEditForm, setEditForm] = useState(false)
   const { _id, title, quantity, price } = product
 
   const dispatch = useDispatch();
 
   const onDelete = async (id) => {
-    try {
-      await axios.delete(`/api/products/${id}`)
-      dispatch(actions.deleteProduct(id))
-    } catch (e) {
-      console.error(e)
-    }
+    dispatch(actions.deleteProduct(id))
   }
 
   return (
@@ -27,8 +22,7 @@ const Product = ({ product, onAddToCart }) => {
         <p className="quantity">{`${quantity} left in stock`}</p>
         <EditProduct product={product} 
                      showEditForm={showEditForm}
-                     setEditForm={setEditForm}
-                     onAddToCart={onAddToCart}/>
+                     setEditForm={setEditForm} />
       </div>
       <a className="delete-button" onClick={() => onDelete(_id)}>
         <span>X</span>

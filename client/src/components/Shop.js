@@ -1,13 +1,21 @@
 import Items from "./Items";
+import axios from "axios";
+import actions from '../lib/actions'
+import { useDispatch, useSelector } from "react-redux";
 
-const Shop = ({ cart, onCheckout }) => {
+const Shop = () => {
+
+  const cart = useSelector(state => state.cart)
+  const dispatch = useDispatch();
+
   const btnClass = cart.length === 0 ?
     "button checkout disabled" :
     "button checkout"
 
-  const handleCheckout = () => {
-    if (cart.length) onCheckout()
-  }  
+  const handleCheckout = async () => {
+    if (!cart.length) return
+    dispatch(actions.checkoutCart())
+  }
 
   return (
     <header>
